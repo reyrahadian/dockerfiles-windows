@@ -6,9 +6,13 @@ ENV TRAEFIK_VERSION 1.7.12
 
 ADD https://github.com/containous/traefik/releases/download/v${TRAEFIK_VERSION}/traefik_windows-amd64.exe /traefik.exe
 
+VOLUME C:/etc/traefik
+VOLUME C:/etc/ssl
+
 EXPOSE 80
-USER containeradministrator
-ENTRYPOINT ["/traefik"]
+USER ContainerAdministrator
+COPY traefik-letsencrypt.toml /traefik.toml
+ENTRYPOINT ["/traefik", "--configfile=C:/traefik.toml"]
 
 # Metadata
 LABEL org.label-schema.vendor="Containous" \
